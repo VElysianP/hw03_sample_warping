@@ -33,4 +33,5 @@ HEADERS += \
     $$PWD/implement_me/warpfunctions.h \
     $$PWD/ignore_me/pointvisualizer.h \
     $$PWD/ignore_me/gridvisualizer.h \
-    $$PWD/ignore_me/errorwindow.h
+    $$PWD/ignore_me/errorwindow.h \
+    $$PWD/implement_me/pcg32.h

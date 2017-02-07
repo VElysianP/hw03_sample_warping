@@ -46,12 +46,16 @@ void Sampler::generateSamples(int& numSamples, SampleMode sampleMode, WarpMethod
 
         case GRID:
             //TODO
-            throw std::runtime_error("You haven't yet implemented grid sampling!");
+            sample = glm::vec2(x*invSqrtVal+0.5*invSqrtVal, y*invSqrtVal+0.5*invSqrtVal);
+//            throw std::runtime_error("You haven't yet implemented grid sampling!");
             break;
 
         case STRATIFIED:
             //TODO
-            throw std::runtime_error("You haven't yet implemented stratified sampling!");
+            glm::vec2 gridCoordinate = glm::vec2(x*invSqrtVal+0.5*invSqrtVal, y*invSqrtVal+0.5*invSqrtVal);
+            glm::vec2 randomNess = glm::vec2(rng.nextFloat()-0.5, rng.nextFloat()-0.5);
+            sample = glm::vec2(randomNess[0]*invSqrtVal+gridCoordinate[0],randomNess[1]*invSqrtVal+gridCoordinate[1]);
+//            throw std::runtime_error("You haven't yet implemented stratified sampling!");
             break;
         }
 
