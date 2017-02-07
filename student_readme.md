@@ -41,9 +41,19 @@ These functions includes:
 ![](http://i.imgur.com/rYayLym.jpg)
 ![](http://i.imgur.com/ZSZxpkw.jpg)
 - squareToSphereCapUniform
+![](http://i.imgur.com/DoSlZPm.jpg)
+![](http://i.imgur.com/zf5daHk.jpg)
 - squareToHemisphereUniform
 ![](http://i.imgur.com/llnboXf.jpg)
 ![](http://i.imgur.com/NGmfjxN.jpg)
 - squareToHemisphereCosine
 ![](http://i.imgur.com/BTIeFho.jpg)
 ![](http://i.imgur.com/iQtHDkl.jpg)
+
+**Sample Warping Probability Density Functions**
+
+The result of this part is:
+
+![](http://i.imgur.com/t3Hk61W.jpg)
+
+Because of the resolution of my computer, the icons of my homework would not be very clear. 

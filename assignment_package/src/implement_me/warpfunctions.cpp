@@ -65,7 +65,8 @@ float WarpFunctions::squareToDiskPDF(const glm::vec3 &sample)
 {
     //TODO
 //    return 0;
-    throw std::runtime_error("You haven't yet implemented concentric disk warping!");
+    return INV_PI;
+
 }
 
 glm::vec3 WarpFunctions::squareToSphereUniform(const glm::vec2 &sample)
@@ -84,57 +85,66 @@ float WarpFunctions::squareToSphereUniformPDF(const glm::vec3 &sample)
 {
     //TODO
 //    return 0;
-    throw std::runtime_error("You haven't yet implemented concentric disk warping!");
+    return INV_FOURPI;
+//    throw std::runtime_error("You haven't yet implemented concentric disk warping!");
 }
 
 glm::vec3 WarpFunctions::squareToSphereCapUniform(const glm::vec2 &sample, float thetaMin)
 {
     //TODO
-    glm::vec3 newCoordinate = squareToHemisphereUniform(sample);
-    if(thetaMin>90)
-    {
-        if(thetaMin>180)
-        {
-            throw std::runtime_error("Out of range!");
-        }
-        if(thetaMin==180)
-        {
-            return glm::vec3(0.0,0.0,1.0);
-        }
-        float actualAngle = PI*(180-thetaMin)/180;
-        float scaleAmount = (1-std::cos(actualAngle))/std::sin(actualAngle);
-        return glm::vec3(newCoordinate[0],newCoordinate[1],newCoordinate[2]*scaleAmount);
-    }
-    else if(thetaMin==90)
-    {
-        return newCoordinate;
-    }
-    else if(thetaMin==0)
-    {
-        newCoordinate = squareToSphereUniform(sample);
-        return newCoordinate;
-    }
-    else//0<thetaMin<90
-    {
-        if(thetaMin<0)
-        {
-            throw std::runtime_error("Out of range!");
-        }
-        newCoordinate = squareToSphereUniform(sample);
-        float actualAngle = PI*(thetaMin)/180;
-        float judgeLength = 0.5/std::tan(actualAngle);
-        if(newCoordinate[2]>=-judgeLength)
-        {
-            return newCoordinate/std::sin(actualAngle);
-        }
-    }
+//    glm::vec3 newCoordinate = squareToHemisphereUniform(sample);
+//    if(thetaMin>90)
+//    {
+//        if(thetaMin>180)
+//        {
+//            throw std::runtime_error("Out of range!");
+//        }
+//        if(thetaMin==180)
+//        {
+//            return glm::vec3(0.0,0.0,1.0);
+//        }
+//        float actualAngle = PI*(180-thetaMin)/180;
+//        float scaleAmount = (1-std::cos(actualAngle))/std::sin(actualAngle);
+//        return glm::vec3(newCoordinate[0],newCoordinate[1],newCoordinate[2]*scaleAmount);
+//    }
+//    else if(thetaMin==90)
+//    {
+//        return newCoordinate;
+//    }
+//    else if(thetaMin==0)
+//    {
+//        newCoordinate = squareToSphereUniform(sample);
+//        return newCoordinate;
+//    }
+//    else//0<thetaMin<90
+//    {
+//        if(thetaMin<0)
+//        {
+//            throw std::runtime_error("Out of range!");
+//        }
+//        newCoordinate = squareToSphereUniform(sample);
+//        float actualAngle = PI*(thetaMin)/180;
+//        float judgeLength = 0.5/std::tan(actualAngle);
+//        if(newCoordinate[2]>=-judgeLength)
+//        {
+//            return newCoordinate/std::sin(actualAngle);
+//        }
+//    }
+
+    float z_coordinate = 1-2* sample[0]*(180-thetaMin)/180;
+    float x_coordinate = std::cos(2*PI*sample[1])*sqrt(1-z_coordinate*z_coordinate);
+    float y_coordinate = std::sin(2*PI*sample[1])*sqrt(1-z_coordinate*z_coordinate);
+
+    return glm::vec3(x_coordinate,y_coordinate,z_coordinate);
 }
 
 float WarpFunctions::squareToSphereCapUniformPDF(const glm::vec3 &sample, float thetaMin)
 {
     //TODO
 //    return 0;
-    throw std::runtime_error("You haven't yet implemented concentric disk warping!");
+    float actualAngle = M_PI*(180-thetaMin)/180;
+    float area = 2*M_PI*(1-cos(actualAngle));
+    return 1/area;
 }
 
 glm::vec3 WarpFunctions::squareToHemisphereUniform(const glm::vec2 &sample)
@@ -152,7 +162,7 @@ float WarpFunctions::squareToHemisphereUniformPDF(const glm::vec3 &sample)
 {
     //TODO
 //    return 0;
-    throw std::runtime_error("You haven't yet implemented concentric disk warping!");
+    return INV_TWOPI;
 }
 
 glm::vec3 WarpFunctions::squareToHemisphereCosine(const glm::vec2 &sample)
@@ -171,5 +181,7 @@ float WarpFunctions::squareToHemisphereCosinePDF(const glm::vec3 &sample)
 {
     //TODO
 //    return 0;
-    throw std::runtime_error("You haven't yet implemented concentric disk warping!");
+    float cosTheta = sample[2];
+
+    return cosTheta*INV_PI;
 }
