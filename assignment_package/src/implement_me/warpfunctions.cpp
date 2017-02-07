@@ -90,8 +90,44 @@ float WarpFunctions::squareToSphereUniformPDF(const glm::vec3 &sample)
 glm::vec3 WarpFunctions::squareToSphereCapUniform(const glm::vec2 &sample, float thetaMin)
 {
     //TODO
-
-    throw std::runtime_error("You haven't yet implemented sphere cap warping!");
+    glm::vec3 newCoordinate = squareToHemisphereUniform(sample);
+    if(thetaMin>90)
+    {
+        if(thetaMin>180)
+        {
+            throw std::runtime_error("Out of range!");
+        }
+        if(thetaMin==180)
+        {
+            return glm::vec3(0.0,0.0,1.0);
+        }
+        float actualAngle = PI*(180-thetaMin)/180;
+        float scaleAmount = (1-std::cos(actualAngle))/std::sin(actualAngle);
+        return glm::vec3(newCoordinate[0],newCoordinate[1],newCoordinate[2]*scaleAmount);
+    }
+    else if(thetaMin==90)
+    {
+        return newCoordinate;
+    }
+    else if(thetaMin==0)
+    {
+        newCoordinate = squareToSphereUniform(sample);
+        return newCoordinate;
+    }
+    else//0<thetaMin<90
+    {
+        if(thetaMin<0)
+        {
+            throw std::runtime_error("Out of range!");
+        }
+        newCoordinate = squareToSphereUniform(sample);
+        float actualAngle = PI*(thetaMin)/180;
+        float judgeLength = 0.5/std::tan(actualAngle);
+        if(newCoordinate[2]>=-judgeLength)
+        {
+            return newCoordinate/std::sin(actualAngle);
+        }
+    }
 }
 
 float WarpFunctions::squareToSphereCapUniformPDF(const glm::vec3 &sample, float thetaMin)
@@ -122,9 +158,12 @@ float WarpFunctions::squareToHemisphereUniformPDF(const glm::vec3 &sample)
 glm::vec3 WarpFunctions::squareToHemisphereCosine(const glm::vec2 &sample)
 {
     //TODO
-    float z_coordinate = std::sqrt(1-sample[0]*sample[0]-sample[1]*sample[1]);
 
-    return glm::vec3(sample[0],sample[1],z_coordinate);
+    glm::vec3 flatHemisphere = squareToDiskConcentric(sample);
+    float z_coordinate = std::sqrt(1-flatHemisphere[0]*flatHemisphere[0]-flatHemisphere[1]*flatHemisphere[1]);
+
+    return glm::vec3(flatHemisphere[0],flatHemisphere[1],z_coordinate);
+
 //    throw std::runtime_error("You haven't yet implemented cosine-weighted hemisphere warping!");
 }
 

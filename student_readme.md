@@ -15,6 +15,8 @@ implemented.
 **1. Square Sampling Functions**
 In this function, the switch statement cases for generating grid-aligned samples and stratified samples are implemented. Each of the samples generated should fall within the range [0, 1) on the X and Y axes.
 
+***There is some problem cause by the screen printing, and the grid in my project is of uniform width not as shown in the screenshots.*
+
 - Random Sampling
 ![](http://i.imgur.com/kZ9ilFe.jpg)
 ![](http://i.imgur.com/YG6hTbR.jpg)
@@ -43,3 +45,5 @@ These functions includes:
 ![](http://i.imgur.com/llnboXf.jpg)
 ![](http://i.imgur.com/NGmfjxN.jpg)
 - squareToHemisphereCosine
+![](http://i.imgur.com/BTIeFho.jpg)
+![](http://i.imgur.com/iQtHDkl.jpg)
